@@ -1,0 +1,15 @@
+kumuluzee:
+  name: rso-catalogues
+  env:
+    name: dev
+  version: 1.0.0
+  server:
+    base-url: http://localhost:8081
+    http:
+      port: 8081
+  datasources:
+    - jndi-name: jdbc/CataloguesDS
+      connection-url: jdbc:postgresql://localhost:5432/rso-catalogues
+      username: postgres
+      password: postgres
+      max-pool-size: 20
