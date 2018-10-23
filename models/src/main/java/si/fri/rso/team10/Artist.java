@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+@Entity
 public class Artist {
     private Long id;
     private String alias;

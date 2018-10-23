@@ -1,0 +1,1 @@
+INSERT INTO public.artist(id, alias, artisttype, birthdate, deathdate, gender, name) VALUES (1, 'fredi', 'PERSON', '1995-10-10 00:00:00', NULL, 'MAN', 'Fredi Miler');
