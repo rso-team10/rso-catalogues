@@ -1,16 +1,26 @@
 package si.fri.rso.team10;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 public class Track {
+    private Long id;
     private Artist artist;
     private Album album;
     private String name;
     private String genre;
     private Date releaseDate;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @ManyToOne
     public Artist getArtist() {

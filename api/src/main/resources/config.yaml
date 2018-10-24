@@ -10,6 +10,7 @@ kumuluzee:
   datasources:
     - jndi-name: jdbc/CataloguesDS
       connection-url: jdbc:postgresql://localhost:5432/rso-catalogues
+#      connection-url: jdbc:postgresql://host.docker.internal:5432/rso-catalogues
       username: postgres
       password: postgres
       max-pool-size: 20
