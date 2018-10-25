@@ -2,10 +2,7 @@ package si.fri.rso.team10;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -24,5 +21,15 @@ public class ArtistEndpoint {
         List<Artist> artists = catalogueService.getArtists();
 
         return Response.ok(artists).build();
+    }
+
+    @POST
+    @Path("add")
+    public Response addArtist(Artist artist) {
+        if (catalogueService.addArtist(artist)) {
+            return Response.ok(artist).build();
+        } else {
+            return Response.serverError().build();
+        }
     }
 }
