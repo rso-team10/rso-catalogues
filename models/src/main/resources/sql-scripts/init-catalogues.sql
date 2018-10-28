@@ -1,1 +1,1 @@
-INSERT INTO public.artist(id, alias, artisttype, birthdate, deathdate, gender, name) VALUES (1, 'fredi', 'PERSON', '1995-10-10 00:00:00', NULL, 'MAN', 'Fredi Miler');
+INSERT INTO artist(alias, artisttype, birthdate, deathdate, gender, name) select 'fredi', 'PERSON', '1995-10-10 00:00:00', NULL, 'MAN', 'Fredi Miler' where not exists(select id from artist where alias = 'fredi')
