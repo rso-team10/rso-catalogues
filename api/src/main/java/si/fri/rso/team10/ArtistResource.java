@@ -15,6 +15,9 @@ public class ArtistResource {
     @Inject
     private ArtistService artistService;
 
+    @Inject
+    private AlbumService albumService;
+
     @GET
     public Response getArtists() {
         var artists = artistService.getArtists();
@@ -32,9 +35,20 @@ public class ArtistResource {
         }
     }
 
+    @GET
+    @Path("{artistId}/albums")
+    public Response getAlbumsByArtist(@PathParam("artistId") String artistId) {
+        try {
+            var albums = albumService.getAlbumByArtistId(Long.parseLong(artistId));
+            return Response.ok(albums).build();
+        } catch (NumberFormatException e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
     @POST
     public Response addArtist(Artist artist) {
-        if (artistService.addArtist(artist)) {
+        if (artistService.addEntity(artist)) {
             return Response.ok(artist).build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -46,7 +60,7 @@ public class ArtistResource {
     public Response deleteArtist(@PathParam("artistId") String artistId) {
         try {
             var artist = artistService.getArtist(Long.parseLong(artistId));
-            if(artist != null && artistService.deleteArtist(artist)){
+            if(artist != null && artistService.deleteEntity(artist)){
                 return Response.ok().build();
             } else {
                 return Response.status(Response.Status.NOT_FOUND).build();
