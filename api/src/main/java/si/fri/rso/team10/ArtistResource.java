@@ -18,6 +18,9 @@ public class ArtistResource {
     @Inject
     private AlbumService albumService;
 
+    @Inject
+    private TrackService trackService;
+
     @GET
     public Response getArtists() {
         var artists = artistService.getArtists();
@@ -41,6 +44,17 @@ public class ArtistResource {
         try {
             var albums = albumService.getAlbumByArtistId(Long.parseLong(artistId));
             return Response.ok(albums).build();
+        } catch (NumberFormatException e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @GET
+    @Path("{artistId}/tracks")
+    public Response getTracksByArtist(@PathParam("artistId") String artistId) {
+        try {
+            var tracks = trackService.getTracksByArtist(Long.parseLong(artistId));
+            return Response.ok(tracks).build();
         } catch (NumberFormatException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
