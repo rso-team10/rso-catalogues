@@ -22,6 +22,18 @@ public class TrackResource {
     }
 
     @GET
+    @Path("/most")
+    public Response getMostPopularTrack() {
+        var track = trackService.getMostPopularTrack();
+
+        Track dummy = new Track();
+        dummy.setId(track.getId());
+        dummy.setName(track.getName());
+
+        return Response.ok(dummy).build();
+    }
+
+    @GET
     @Path("{trackId}")
     public Response getTrack(@PathParam("trackId") String id) {
         try {
