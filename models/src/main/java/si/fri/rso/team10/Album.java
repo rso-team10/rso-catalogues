@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Album {
+public class Album implements IdentifiableEntity{
     private Long id;
     private String name;
     private Artist artist;
@@ -15,6 +15,7 @@ public class Album {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Override
     public Long getId() {
         return id;
     }

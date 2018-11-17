@@ -1,10 +1,15 @@
 package si.fri.rso.team10;
 
+import si.fri.rso.team10.dto.AlbumDTO;
+import si.fri.rso.team10.dto.ArtistDTO;
+import si.fri.rso.team10.dto.TrackDTO;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.stream.Collectors;
 
 @RequestScoped
 @Consumes(MediaType.APPLICATION_JSON)
@@ -32,7 +37,7 @@ public class ArtistResource {
     public Response getArtist(@PathParam("artistId") String artistId) {
         try {
             var artist = artistService.getArtist(Long.parseLong(artistId));
-            return Response.ok(artist).build();
+            return Response.ok(new ArtistDTO(artist)).build();
         } catch (NumberFormatException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -42,7 +47,7 @@ public class ArtistResource {
     @Path("{artistId}/albums")
     public Response getAlbumsByArtist(@PathParam("artistId") String artistId) {
         try {
-            var albums = albumService.getAlbumByArtistId(Long.parseLong(artistId));
+            var albums = albumService.getAlbumByArtistId(Long.parseLong(artistId)).stream().map(AlbumDTO::new).collect(Collectors.toList());
             return Response.ok(albums).build();
         } catch (NumberFormatException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -53,7 +58,7 @@ public class ArtistResource {
     @Path("{artistId}/tracks")
     public Response getTracksByArtist(@PathParam("artistId") String artistId) {
         try {
-            var tracks = trackService.getTracksByArtist(Long.parseLong(artistId));
+            var tracks = trackService.getTracksByArtist(Long.parseLong(artistId)).stream().map(TrackDTO::new).collect(Collectors.toList());
             return Response.ok(tracks).build();
         } catch (NumberFormatException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -63,7 +68,7 @@ public class ArtistResource {
     @POST
     public Response addArtist(Artist artist) {
         if (artistService.addEntity(artist)) {
-            return Response.ok(artist).build();
+            return Response.ok(new ArtistDTO(artist)).build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -74,7 +79,7 @@ public class ArtistResource {
     public Response deleteArtist(@PathParam("artistId") String artistId) {
         try {
             var artist = artistService.getArtist(Long.parseLong(artistId));
-            if(artist != null && artistService.deleteEntity(artist)){
+            if (artist != null && artistService.deleteEntity(artist)) {
                 return Response.ok().build();
             } else {
                 return Response.status(Response.Status.NOT_FOUND).build();

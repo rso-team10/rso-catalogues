@@ -1,12 +1,15 @@
-package si.fri.rso.team10;
+package si.fri.rso.team10.dto;
 
-import javax.persistence.*;
+import si.fri.rso.team10.Artist;
+import si.fri.rso.team10.ArtistType;
+import si.fri.rso.team10.Gender;
+
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Entity
-public class Artist implements IdentifiableEntity{
-    private Long id;
+public class ArtistDTO extends BasicDTO {
+
     private String alias;
     private Date birthDate;
     private Date deathDate;
@@ -15,17 +18,20 @@ public class Artist implements IdentifiableEntity{
     private Gender gender;
 
     private List<String> members;
-    private List<Track> tracks;
+    private List<BasicDTO> tracks;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Override
-    public Long getId() {
-        return id;
-    }
+    public ArtistDTO(Artist artist) {
+        super(artist);
 
-    public void setId(Long id) {
-        this.id = id;
+        this.alias = artist.getAlias();
+        this.birthDate = artist.getBirthDate();
+        this.deathDate = artist.getDeathDate();
+        this.name = artist.getName();
+        this.artistType = artist.getArtistType();
+        this.gender = artist.getGender();
+        this.members = artist.getMembers();
+
+        this.tracks = artist.getTracks().stream().map(BasicDTO::new).collect(Collectors.toList());
     }
 
     public String getAlias() {
@@ -60,7 +66,6 @@ public class Artist implements IdentifiableEntity{
         this.name = name;
     }
 
-    @Enumerated(EnumType.STRING)
     public ArtistType getArtistType() {
         return artistType;
     }
@@ -69,7 +74,6 @@ public class Artist implements IdentifiableEntity{
         this.artistType = artistType;
     }
 
-    @Enumerated(EnumType.STRING)
     public Gender getGender() {
         return gender;
     }
@@ -78,7 +82,6 @@ public class Artist implements IdentifiableEntity{
         this.gender = gender;
     }
 
-    @ElementCollection
     public List<String> getMembers() {
         return members;
     }
@@ -87,12 +90,11 @@ public class Artist implements IdentifiableEntity{
         this.members = members;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "artist")
-    public List<Track> getTracks() {
+    public List<BasicDTO> getTracks() {
         return tracks;
     }
 
-    public void setTracks(List<Track> tracks) {
+    public void setTracks(List<BasicDTO> tracks) {
         this.tracks = tracks;
     }
 }

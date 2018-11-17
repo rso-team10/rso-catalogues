@@ -1,10 +1,13 @@
 package si.fri.rso.team10;
 
+import si.fri.rso.team10.dto.TrackDTO;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.stream.Collectors;
 
 @RequestScoped
 @Consumes(MediaType.APPLICATION_JSON)
@@ -14,10 +17,10 @@ public class TrackResource {
 
     @Inject
     private TrackService trackService;
-    
+
     @GET
     public Response getTracks() {
-        var tracks = trackService.getTracks();
+        var tracks = trackService.getTracks().stream().map(TrackDTO::new).collect(Collectors.toList());
         return Response.ok(tracks).build();
     }
 
@@ -25,12 +28,7 @@ public class TrackResource {
     @Path("/most")
     public Response getMostPopularTrack() {
         var track = trackService.getMostPopularTrack();
-
-        Track dummy = new Track();
-        dummy.setId(track.getId());
-        dummy.setName(track.getName());
-
-        return Response.ok(dummy).build();
+        return Response.ok(new TrackDTO(track)).build();
     }
 
     @GET
@@ -38,7 +36,7 @@ public class TrackResource {
     public Response getTrack(@PathParam("trackId") String id) {
         try {
             var track = trackService.getTrack(Long.parseLong(id));
-            return Response.ok(track).build();
+            return Response.ok(new TrackDTO(track)).build();
         } catch (NumberFormatException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -47,7 +45,7 @@ public class TrackResource {
     @POST
     public Response addTrack(Track track) {
         if (trackService.addEntity(track)) {
-            return Response.ok(track).build();
+            return Response.ok(new TrackDTO(track)).build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }

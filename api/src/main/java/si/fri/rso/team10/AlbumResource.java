@@ -1,11 +1,13 @@
 package si.fri.rso.team10;
 
+import si.fri.rso.team10.dto.AlbumDTO;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
+import java.util.stream.Collectors;
 
 @RequestScoped
 @Consumes(MediaType.APPLICATION_JSON)
@@ -18,7 +20,7 @@ public class AlbumResource {
 
     @GET
     public Response getAlbums() {
-        List<Album> albums = albumService.getAlbums();
+        var albums = albumService.getAlbums().stream().map(AlbumDTO::new).collect(Collectors.toList());
         return Response.ok(albums).build();
     }
 
@@ -27,7 +29,7 @@ public class AlbumResource {
     public Response getAlbum(@PathParam("albumId") String id) {
         try {
             var album = albumService.getAlbum(Long.parseLong(id));
-            return Response.ok(album).build();
+            return Response.ok(new AlbumDTO(album)).build();
         } catch (NumberFormatException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -36,7 +38,7 @@ public class AlbumResource {
     @POST
     public Response addAlbum(Album album) {
         if (albumService.addEntity(album)) {
-            return Response.ok(album).build();
+            return Response.ok(new AlbumDTO(album)).build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }

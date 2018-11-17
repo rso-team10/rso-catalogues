@@ -1,43 +1,40 @@
-package si.fri.rso.team10;
+package si.fri.rso.team10.dto;
 
-import javax.persistence.*;
+import si.fri.rso.team10.Track;
+
 import java.util.Date;
 
-@Entity
-public class Track implements IdentifiableEntity {
-    private Long id;
-    private Artist artist;
-    private Album album;
+public class TrackDTO extends BasicDTO {
+
+    private BasicDTO artist;
+    private BasicDTO album;
     private String name;
     private String genre;
     private Date releaseDate;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Override
-    public Long getId() {
-        return id;
+    public TrackDTO(Track track) {
+        super(track);
+
+        this.artist = new BasicDTO(track.getArtist());
+        this.album = new BasicDTO(track.getAlbum());
+        this.name = track.getName();
+        this.genre = track.getGenre();
+        this.releaseDate = track.getReleaseDate();
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @ManyToOne
-    public Artist getArtist() {
+    public BasicDTO getArtist() {
         return artist;
     }
 
-    public void setArtist(Artist artist) {
+    public void setArtist(BasicDTO artist) {
         this.artist = artist;
     }
 
-    @ManyToOne
-    public Album getAlbum() {
+    public BasicDTO getAlbum() {
         return album;
     }
 
-    public void setAlbum(Album album) {
+    public void setAlbum(BasicDTO album) {
         this.album = album;
     }
 
