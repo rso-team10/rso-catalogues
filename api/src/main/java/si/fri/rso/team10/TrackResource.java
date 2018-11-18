@@ -1,5 +1,6 @@
 package si.fri.rso.team10;
 
+import si.fri.rso.team10.configuration.ConfigurationProperties;
 import si.fri.rso.team10.dto.TrackDTO;
 
 import javax.enterprise.context.RequestScoped;
@@ -17,6 +18,9 @@ public class TrackResource {
 
     @Inject
     private TrackService trackService;
+
+    @Inject
+    private ConfigurationProperties configProps;
 
     @GET
     public Response getTracks() {
@@ -64,5 +68,11 @@ public class TrackResource {
         } catch (NumberFormatException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
+    }
+
+    @GET
+    @Path("config")
+    public Response getConfigValue() {
+        return Response.ok("{\"value\": \"" + configProps.getStringProperty() + "\"}").build();
     }
 }
