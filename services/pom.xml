@@ -12,7 +12,6 @@
     <artifactId>catalogues-services</artifactId>
 
     <properties>
-        <kumuluzee-config.version>1.2.0-SNAPSHOT</kumuluzee-config.version>
     </properties>
 
     <dependencies>
@@ -37,6 +36,11 @@
             <artifactId>kumuluzee-config-etcd</artifactId>
             <groupId>com.kumuluz.ee.config</groupId>
             <version>${kumuluzee-config.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.discovery</groupId>
+            <artifactId>kumuluzee-discovery-etcd</artifactId>
+            <version>${kumuluzee-discovery.version}</version>
         </dependency>
     </dependencies>
 

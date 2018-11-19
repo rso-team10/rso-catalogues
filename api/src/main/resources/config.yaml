@@ -18,7 +18,12 @@ kumuluzee:
     start-retry-delay-ms: 500
     max-retry-delay-ms: 900000
     etcd:
-      hosts: http://10.0.75.1:2379
+      hosts: http://127.0.0.1:2379
+  discovery:
+    etcd:
+      hosts: http://127.0.0.1:2379
+    ttl: 20
+    ping-interval: 15
 
 config-bundle:
   string-property: default
