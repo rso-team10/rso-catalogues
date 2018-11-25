@@ -11,6 +11,14 @@ terminal v njem).
 
 ### Configuration
 
+#### IMPORTANT
+Before everything, make sure to have a .env file in the root directory!
+
+```
+chmod u+x create-env.sh
+./create-env-sh
+```
+
 #### Run etcd node
 First install ectd locally. Figure out your Docker IP (ifconfig -> Docker ip) and save it.
 Then setup a single node:
@@ -22,8 +30,23 @@ NOTE: Make sure the correct IP is used in the config.yaml file, under etcd hosts
 # Deleted volume for the time being
 
 # Run a etcd node
-docker run -d -p 2379:2379 --name etcd quay.io/coreos/etcd:latest /usr/local/bin/etcd --name my-etcd-1 --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380  --initial-advertise-peer-urls http://0.0.0.0:2380 --initial-cluster my-etcd-1=http://0.0.0.0:2380 --initial-cluster-token my-etcd-token --initial-cluster-state new --auto-compaction-retention 1 -cors="*"
-
+docker run -d -p 2379:2379 \
+   --name etcd \
+   --volume=/tmp/etcd-data:/etcd-data \
+   quay.io/coreos/etcd:latest \
+   /usr/local/bin/etcd \
+   --name my-etcd-1 \
+   --data-dir /etcd-data \
+   --listen-client-urls http://0.0.0.0:2379 \
+   --advertise-client-urls http://0.0.0.0:2379 \
+   --listen-peer-urls http://0.0.0.0:2380 \
+   --initial-advertise-peer-urls http://0.0.0.0:2380 \
+   --initial-cluster my-etcd-1=http://0.0.0.0:2380 \
+   --initial-cluster-token my-etcd-token \
+   --initial-cluster-state new \
+   --auto-compaction-retention 1 \
+   -cors="*"
+   
 # List nodes, I guess?
 etcdctl -C http://0.0.0.0:2379 member list
 ```
