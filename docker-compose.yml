@@ -1,0 +1,20 @@
+version: '3'
+services:
+  rso-stats:
+    container_name: rso-catalogues
+    image: catalogues:latest
+    ports:
+      - 8081:8081
+    environment:
+      - KUMULUZEE_SERVER_BASEURL=http://${DOCKER_HOST_IP}:8082
+    depends_on:
+      - catalogues-db
+  catalogues  -db:
+    container_name: rso-catalogues-db
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=rso-catalogues
