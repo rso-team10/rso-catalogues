@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: postgre-cata
+  labels:
+    app: postgre-cata
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgre-cata
+  template:
+    metadata:
+      labels:
+        app: postgre-cata
+    spec:
+      containers:
+        - image: postgres:latest
+          name: postgre-cata
+          env:
+            - name: POSTGRES_USERNAME
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: rso-catalogues
+          ports:
+            - containerPort: 5432
+              name: postgre-cata
+          volumeMounts:
+            - name: persistant-storage
+              mountPath: /var/lib/postgresql
+      volumes:
+        - name: persistant-storage
+          persistentVolumeClaim:
+            claimName: vol-cata

@@ -6,10 +6,10 @@ import com.kumuluz.ee.configuration.cdi.ConfigValue;
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-@ConfigBundle("config-bundle")
+//@ConfigBundle("config-bundle")
 public class ConfigurationProperties {
 
-    @ConfigValue(watch = true)
+//    @ConfigValue(watch = true)
     private String stringProperty;
 
     public String getStringProperty() {
