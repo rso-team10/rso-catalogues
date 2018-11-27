@@ -11,6 +11,7 @@ public class Track implements IdentifiableEntity {
     private String name;
     private String genre;
     private Date releaseDate;
+    private boolean active = false;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,5 +64,14 @@ public class Track implements IdentifiableEntity {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    @Column(nullable = false)
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

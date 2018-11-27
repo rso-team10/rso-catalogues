@@ -2,6 +2,6 @@ INSERT INTO artist(alias, artisttype, birthdate, deathdate, gender, name) select
 
 INSERT INTO album(name, artist_id) (select 'Mi gremo v hribe', artist.id from artist where artist.alias = 'fredi')
 
-INSERT INTO track(artist_id, album_id, name, genre) (select art.id, alb.id, 'Hojladri1', 'Rock' from artist art join album alb on art.id = alb.artist_id where art.alias = 'fredi')
-INSERT INTO track(artist_id, album_id, name, genre) (select art.id, alb.id, 'Hojladri2', 'Rock' from artist art join album alb on art.id = alb.artist_id where art.alias = 'fredi')
-INSERT INTO track(artist_id, album_id, name, genre) (select art.id, alb.id, 'Hojladri3', 'Rock' from artist art join album alb on art.id = alb.artist_id where art.alias = 'fredi')
+INSERT INTO track(artist_id, album_id, name, genre, active) (select art.id, alb.id, 'Hojladri1', 'Rock', true from artist art join album alb on art.id = alb.artist_id where art.alias = 'fredi')
+INSERT INTO track(artist_id, album_id, name, genre, active) (select art.id, alb.id, 'Hojladri2', 'Rock', true from artist art join album alb on art.id = alb.artist_id where art.alias = 'fredi')
+INSERT INTO track(artist_id, album_id, name, genre, active) (select art.id, alb.id, 'Hojladri3', 'Rock', true from artist art join album alb on art.id = alb.artist_id where art.alias = 'fredi')
