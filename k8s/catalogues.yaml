@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: catalogues
+  labels:
+    app: catalogues
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: catalogues
+  template:
+    metadata:
+      labels:
+        app: catalogues
+    spec:
+      containers:
+        - image: kozeljko/catalogues
+          name: catalogues
+          env:
+            - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
+              value: jdbc:postgresql://postgre-cata:5432/rso-catalogues
+          ports:
+            - containerPort: 8081
+              name: catalogues

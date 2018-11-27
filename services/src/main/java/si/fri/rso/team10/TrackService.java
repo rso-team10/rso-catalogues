@@ -20,9 +20,9 @@ import java.util.List;
 @RequestScoped
 public class TrackService extends AbstractService<Track> {
 
-    @Inject
-    @DiscoverService(value = "rso-stats", version = "1.0.x", environment = "dev")
-    private WebTarget statsService;
+//    @Inject
+//    @DiscoverService(value = "rso-stats", version = "1.0.x", environment = "dev")
+//    private WebTarget statsService;
 
     @PersistenceContext
     private EntityManager em;
@@ -50,7 +50,8 @@ public class TrackService extends AbstractService<Track> {
 
     public Track getMostPopularTrack() {
         var httpClient = HttpClient.newBuilder().build();
-        var httpRequest = HttpRequest.newBuilder(statsService.getUriBuilder().path("/v1/listen/most").build()).build();
+//        var httpRequest = HttpRequest.newBuilder(statsService.getUriBuilder().path("/v1/listen/most").build()).build();
+        var httpRequest = HttpRequest.newBuilder(URI.create("http://stats:8082/v1/listen/most")).build();
         try {
             var httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             var trackCount = new ObjectMapper().readValue(httpResponse.body(), TrackCount.class);

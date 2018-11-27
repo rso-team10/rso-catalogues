@@ -11,6 +11,7 @@ public class TrackDTO extends BasicDTO {
     private String name;
     private String genre;
     private Date releaseDate;
+    private boolean active;
 
     public TrackDTO(Track track) {
         super(track);
@@ -20,6 +21,7 @@ public class TrackDTO extends BasicDTO {
         this.name = track.getName();
         this.genre = track.getGenre();
         this.releaseDate = track.getReleaseDate();
+        this.active = track.getActive();
     }
 
     public BasicDTO getArtist() {
@@ -60,5 +62,13 @@ public class TrackDTO extends BasicDTO {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

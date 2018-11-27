@@ -19,6 +19,19 @@ public abstract class AbstractService<T> {
         }
     }
 
+    public boolean mergeEntity(T entity) {
+        try {
+            beginTransaction();
+            getEntityManager().merge(entity);
+            commitTransaction();
+            return true;
+        } catch (Exception e){
+            rollbackTransaction();
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
     public boolean deleteEntity(T entity) {
         try {
             beginTransaction();

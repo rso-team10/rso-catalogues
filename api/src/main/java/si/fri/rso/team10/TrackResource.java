@@ -75,4 +75,21 @@ public class TrackResource {
     public Response getConfigValue() {
         return Response.ok("{\"value\": \"" + configProps.getStringProperty() + "\"}").build();
     }
+
+    @POST
+    @Path("/activate/{trackId}")
+    public Response activateTrack(@PathParam("trackId") String trackId) {
+        try {
+            var track = trackService.getTrack(Long.parseLong(trackId));
+            if (track != null) {
+                track.setActive(true);
+                trackService.mergeEntity(track);
+                return Response.ok(new TrackDTO(track)).build();
+            } else {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+        } catch (NumberFormatException e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
 }

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgre-cata
+  labels:
+    app: postgre-cata
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+  selector:
+    app: postgre-cata
