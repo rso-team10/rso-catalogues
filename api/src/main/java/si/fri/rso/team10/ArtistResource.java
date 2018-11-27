@@ -28,7 +28,7 @@ public class ArtistResource {
 
     @GET
     public Response getArtists() {
-        var artists = artistService.getArtists();
+        var artists = artistService.getArtists().stream().map(ArtistDTO::new).collect(Collectors.toList());
         return Response.ok(artists).build();
     }
 

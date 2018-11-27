@@ -9,7 +9,7 @@ services:
       - KUMULUZEE_SERVER_BASEURL=http://${DOCKER_HOST_IP}:8082
     depends_on:
       - catalogues-db
-  catalogues  -db:
+  catalogues-db:
     container_name: rso-catalogues-db
     image: postgres:latest
     ports:
