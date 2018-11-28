@@ -57,6 +57,8 @@ To create a property for this project, use this command:
 
 ```
 etcdctl --endpoints http://0.0.0.0:2379 set environments/dev/services/rso-catalogues/1.0.0/config/config-bundle/string-property test_string
+
+curl http://35.202.55.223:2379/v2/keys/environments/dev/services/rso-catalogues/1.0.0/config/config-bundle/string-property -XPUT -d value="test_string"
 ```
 
 config-bundle is what I called the bundle. Check ConfigurationProperties.java and the @ConfigBundle annotation
