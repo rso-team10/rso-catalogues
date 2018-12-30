@@ -1,5 +1,7 @@
 package si.fri.rso.team10;
 
+import com.kumuluz.ee.logs.cdi.Log;
+import com.kumuluz.ee.logs.cdi.LogParams;
 import si.fri.rso.team10.dto.AlbumDTO;
 
 import javax.enterprise.context.RequestScoped;
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("albums")
+@Log(LogParams.METRICS)
 public class AlbumResource {
 
     @Inject

@@ -24,6 +24,45 @@ kumuluzee:
       hosts: http://172.17.0.1:2379
     ttl: 20
     ping-interval: 15
+  logs:
+      config-file:
+        '<?xml version="1.0" encoding="UTF-8"?>
+         <Configuration name="catalogues">
+             <Appenders>
+                 <Console name="console" target="SYSTEM_OUT">
+                     <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
+                 </Console>
+
+                 <!-- A socket definition for sending logs into Logstash using TCP and JSON format.-->
+                 <!-- 14-day trial -->
+                 <Socket name="logstash" host="2cccddcb-90f6-48c3-9b9b-ccee7641e48d-ls.logit.io" port="12843" protocol="tcp">
+                    <JSONLayout complete="false" compact="true" eventEol="true" charset="UTF-8" properties="true"/>
+                 </Socket>
+             </Appenders>
+             <Loggers>
+                 <!-- Resources (REST) -->
+                 <Logger name="si.fri.rso.team10.ArtistResource" level="trace" additivity="false">
+                     <AppenderRef ref="console"/>
+                     <AppenderRef ref="logstash"/>
+                 </Logger>
+
+                 <Logger name="si.fri.rso.team10.AlbumResource" level="trace" additivity="false">
+                     <AppenderRef ref="console"/>
+                     <AppenderRef ref="logstash"/>
+                 </Logger>
+
+                 <Logger name="si.fri.rso.team10.TrackResource" level="trace" additivity="false">
+                     <AppenderRef ref="console"/>
+                     <AppenderRef ref="logstash"/>
+                 </Logger>
+
+                 <!-- Default logger -->
+                 <Root level="info">
+                     <AppenderRef ref="console"/>
+                     <AppenderRef ref="logstash"/>
+                 </Root>
+             </Loggers>
+         </Configuration>'
 
 config-bundle:
   string-property: default
