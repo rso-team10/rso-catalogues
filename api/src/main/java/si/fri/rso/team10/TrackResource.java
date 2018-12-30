@@ -1,5 +1,7 @@
 package si.fri.rso.team10;
 
+import com.kumuluz.ee.logs.cdi.Log;
+import com.kumuluz.ee.logs.cdi.LogParams;
 import si.fri.rso.team10.configuration.ConfigurationProperties;
 import si.fri.rso.team10.dto.TrackDTO;
 
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("tracks")
+@Log(LogParams.METRICS)
 public class TrackResource {
 
     @Inject

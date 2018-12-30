@@ -1,5 +1,7 @@
 package si.fri.rso.team10;
 
+import com.kumuluz.ee.logs.cdi.Log;
+import com.kumuluz.ee.logs.cdi.LogParams;
 import si.fri.rso.team10.dto.AlbumDTO;
 import si.fri.rso.team10.dto.ArtistDTO;
 import si.fri.rso.team10.dto.TrackDTO;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("artists")
+@Log(LogParams.METRICS)
 public class ArtistResource {
 
     @Inject
