@@ -14,6 +14,10 @@ kumuluzee:
       username: postgres
       password: postgres
       max-pool-size: 20
+  health:
+    checks:
+      data-source-health-check:
+        jndi-name: jdbc/CataloguesDS
   config:
     start-retry-delay-ms: 500
     max-retry-delay-ms: 900000

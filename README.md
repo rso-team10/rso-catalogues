@@ -58,7 +58,7 @@ To create a property for this project, use this command:
 ```
 etcdctl --endpoints http://0.0.0.0:2379 set environments/dev/services/rso-catalogues/1.0.0/config/config-bundle/string-property test_string
 
-curl http://35.202.55.223:2379/v2/keys/environments/dev/services/rso-catalogues/1.0.0/config/config-bundle/string-property -XPUT -d value="test_string"
+curl http://35.192.224.167:2379/v2/keys/environments/dev/services/rso-catalogues/1.0.0/config/config-bundle/string-property -XPUT -d value="kill-me"
 ```
 
 config-bundle is what I called the bundle. Check ConfigurationProperties.java and the @ConfigBundle annotation
@@ -71,3 +71,12 @@ configuration bundle name (config-bundle) and property name itself (string-prope
 #### etcd browser
 For easy configuration control in etcd, use etcd-browser: Link is here: https://github.com/henszey/etcd-browser
 Download repo, build image and run it. Make sure to use the correct ETCD_HOST.
+
+#### Liveness test
+
+Glej za restarts:
+```
+kubectl get pod <pod-id>
+```
+
+Kontrolirej z etcd metodo. Glej na /health.
