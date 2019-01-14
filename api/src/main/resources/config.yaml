@@ -39,7 +39,7 @@ kumuluzee:
 
                  <!-- A socket definition for sending logs into Logstash using TCP and JSON format.-->
                  <!-- 14-day trial -->
-                 <Socket name="logstash" host="2cccddcb-90f6-48c3-9b9b-ccee7641e48d-ls.logit.io" port="12843" protocol="tcp">
+                 <Socket name="logstash" host="5c736c1f-93bb-494f-9fd0-f2564e8bbd74-ls.logit.io" port="20760" protocol="tcp">
                     <JSONLayout complete="false" compact="true" eventEol="true" charset="UTF-8" properties="true"/>
                  </Socket>
              </Appenders>
