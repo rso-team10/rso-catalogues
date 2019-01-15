@@ -28,14 +28,16 @@ public class TrackResource {
     @GET
     public Response getTracks() {
         var tracks = trackService.getTracks().stream().map(TrackDTO::new).collect(Collectors.toList());
-        return Response.ok(tracks).build();
+        return Response.ok(tracks).header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
     }
 
     @GET
     @Path("/most")
     public Response getMostPopularTrack() {
         var track = trackService.getMostPopularTrack();
-        return Response.ok(new TrackDTO(track)).build();
+        return Response.ok(new TrackDTO(track)).header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
     }
 
     @GET
@@ -43,7 +45,8 @@ public class TrackResource {
     public Response getTrack(@PathParam("trackId") String id) {
         try {
             var track = trackService.getTrack(Long.parseLong(id));
-            return Response.ok(new TrackDTO(track)).build();
+            return Response.ok(new TrackDTO(track)).header("Access-Control-Allow-Origin", "*")
+                    .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
         } catch (NumberFormatException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -52,7 +55,8 @@ public class TrackResource {
     @POST
     public Response addTrack(Track track) {
         if (trackService.addEntity(track)) {
-            return Response.ok(new TrackDTO(track)).build();
+            return Response.ok(new TrackDTO(track)).header("Access-Control-Allow-Origin", "*")
+                    .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -87,7 +91,8 @@ public class TrackResource {
             if (track != null) {
                 track.setActive(true);
                 trackService.mergeEntity(track);
-                return Response.ok(new TrackDTO(track)).build();
+                return Response.ok(new TrackDTO(track)).header("Access-Control-Allow-Origin", "*")
+                        .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
             } else {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }

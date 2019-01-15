@@ -32,7 +32,8 @@ public class ArtistResource {
     @GET
     public Response getArtists() {
         var artists = artistService.getArtists().stream().map(ArtistDTO::new).collect(Collectors.toList());
-        return Response.ok(artists).build();
+        return Response.ok(artists).header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
     }
 
     @GET
@@ -40,7 +41,8 @@ public class ArtistResource {
     public Response getArtist(@PathParam("artistId") String artistId) {
         try {
             var artist = artistService.getArtist(Long.parseLong(artistId));
-            return Response.ok(new ArtistDTO(artist)).build();
+            return Response.ok(new ArtistDTO(artist)).header("Access-Control-Allow-Origin", "*")
+                    .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
         } catch (NumberFormatException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -71,7 +73,8 @@ public class ArtistResource {
     @POST
     public Response addArtist(Artist artist) {
         if (artistService.addEntity(artist)) {
-            return Response.ok(new ArtistDTO(artist)).build();
+            return Response.ok(new ArtistDTO(artist)).header("Access-Control-Allow-Origin", "*")
+                    .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
