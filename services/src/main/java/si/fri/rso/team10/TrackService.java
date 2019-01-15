@@ -2,6 +2,9 @@ package si.fri.rso.team10;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import si.fri.rso.team10.dto.TrackCount;
 
 import javax.enterprise.context.RequestScoped;
@@ -15,6 +18,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @RequestScoped
@@ -62,6 +66,22 @@ public class TrackService extends AbstractService<Track> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @CircuitBreaker(requestVolumeThreshold = 2)
+    @Timeout(value = 2, unit = ChronoUnit.SECONDS)
+    @Fallback(fallbackMethod = "getTrackFallBack")
+    public Track getFirstTrack() {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return em.find(Track.class, 1);
+    }
+
+    public Track getTrackFallBack() {
+        return new Track();
     }
 
     @Override

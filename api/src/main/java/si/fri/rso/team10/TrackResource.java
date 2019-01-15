@@ -1,5 +1,7 @@
 package si.fri.rso.team10;
 
+import com.kumuluz.ee.logs.LogManager;
+import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
 import com.kumuluz.ee.logs.cdi.LogParams;
 import si.fri.rso.team10.configuration.ConfigurationProperties;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 @Path("tracks")
 @Log(LogParams.METRICS)
 public class TrackResource {
+    private static final Logger LOG = LogManager.getLogger(TrackResource.class.getName());
 
     @Inject
     private TrackService trackService;
@@ -36,6 +39,19 @@ public class TrackResource {
     @Path("/most")
     public Response getMostPopularTrack() {
         var track = trackService.getMostPopularTrack();
+        return Response.ok(new TrackDTO(track)).header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
+    }
+
+    @GET
+    @Path("/first")
+    public Response getFirstTrack() {
+        var track = trackService.getFirstTrack();
+        if (track.getId() == null) {
+//          Timeout
+            LOG.error("Timeout!");
+            return Response.status(408).build();
+        }
         return Response.ok(new TrackDTO(track)).header("Access-Control-Allow-Origin", "*")
                 .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
     }
